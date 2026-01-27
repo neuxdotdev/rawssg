@@ -1,62 +1,60 @@
-
-RAWSSG - RAW STATIC SITE GENERATOR
-===================================
+# RAWSSG - RAW STATIC SITE GENERATOR
 
 A minimalist static site generator built with Rust that keeps content raw and simple.
 No markdown, no complex formatting - just pure text with automatic link detection.
 
-TABLE OF CONTENTS
------------------
+## TABLE OF CONTENTS
 
 1.  Installation
-    1.1  System Requirements
-    1.2  Installing Rust
-    1.3  Installing RawSSG
-    1.4  Building from Source
+    1.1 System Requirements
+    1.2 Installing Rust
+    1.3 Installing RawSSG
+    1.4 Building from Source
 
 2.  Quick Start
-    2.1  Creating Your First Site
-    2.2  Basic Commands
-    2.3  Project Structure
+    2.1 Creating Your First Site
+    2.2 Basic Commands
+    2.3 Project Structure
 
 3.  Configuration
-    3.1  The .rawfile Format
-    3.2  Configuration Options
-    3.3  Validation and Errors
+    3.1 The .rawfile Format
+    3.2 Configuration Options
+    3.3 Validation and Errors
 
 4.  Content Format
-    4.1  .rw Files Explained
-    4.2  Frontmatter Syntax
-    4.3  Raw Content Format
-    4.4  Supported Extensions
+    4.1 .rw Files Explained
+    4.2 Frontmatter Syntax
+    4.3 Raw Content Format
+    4.4 Supported Extensions
 
 5.  Templates
-    5.1  Template System Overview
-    5.2  Built-in Helpers
-    5.3  Partials and Layouts
-    5.4  Custom Templates
+    5.1 Template System Overview
+    5.2 Built-in Helpers
+    5.3 Partials and Layouts
+    5.4 Custom Templates
 
 6.  Building and Deployment
-    6.1  Build Process
-    6.2  Development Server
-    6.3  Production Deployment
-    6.4  Performance Optimization
+    6.1 Build Process
+    6.2 Development Server
+    6.3 Production Deployment
+    6.4 Performance Optimization
 
 7.  Troubleshooting
-    7.1  Common Errors
-    7.2  Debug Tips
-    7.3  Getting Help
+    7.1 Common Errors
+    7.2 Debug Tips
+    7.3 Getting Help
 
 8.  FAQ
-    8.1  General Questions
-    8.2  Technical Questions
-    8.3  Usage Questions
+    8.1 General Questions
+    8.2 Technical Questions
+    8.3 Usage Questions
 
 9.  Contributing
 10. License
 
-1. INSTALLATION
----------------
+11. INSTALLATION
+
+---
 
 1.1 SYSTEM REQUIREMENTS
 
@@ -98,7 +96,8 @@ TABLE OF CONTENTS
     The binary will be at: ./target/release/rawssg
 
 2. QUICK START
---------------
+
+---
 
 2.1 CREATING YOUR FIRST SITE
 
@@ -177,7 +176,8 @@ TABLE OF CONTENTS
         └── feed.xml
 
 3. CONFIGURATION
-----------------
+
+---
 
 3.1 THE .RAWFILE FORMAT
 
@@ -302,7 +302,8 @@ TABLE OF CONTENTS
         - Frontmatter validation
 
 4. CONTENT FORMAT
------------------
+
+---
 
 4.1 .RW FILES EXPLAINED
 
@@ -358,7 +359,8 @@ TABLE OF CONTENTS
     }
 
 5. TEMPLATES
-------------
+
+---
 
 5.1 TEMPLATE SYSTEM OVERVIEW
 
@@ -423,7 +425,8 @@ TABLE OF CONTENTS
         ---
 
 6. BUILDING AND DEPLOYMENT
---------------------------
+
+---
 
 6.1 BUILD PROCESS
 
@@ -503,7 +506,8 @@ TABLE OF CONTENTS
         }
 
 7. TROUBLESHOOTING
-------------------
+
+---
 
 7.1 COMMON ERRORS
 
@@ -556,7 +560,8 @@ TABLE OF CONTENTS
         neuxdev1@gmail.com
 
 8. FAQ
-------
+
+---
 
 8.1 GENERAL QUESTIONS
 
@@ -611,7 +616,8 @@ TABLE OF CONTENTS
     A: Backup content/, templates/, and .rawfile files.
 
 9. CONTRIBUTING
----------------
+
+---
 
     Contributions are welcome!
 
@@ -632,8 +638,8 @@ TABLE OF CONTENTS
         - Provide error messages
 
 10. License
------------
 
+---
 
                     GNU AFFERO GENERAL PUBLIC LICENSE
                        Version 3, 19 November 2007
