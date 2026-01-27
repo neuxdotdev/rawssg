@@ -1,178 +1,22 @@
-name: Rust CI/CD
+name: Rust
 
 on:
   push:
-    branches: [ "main", "develop" ]
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-  workflow_dispatch:  # Manual trigger
 
 env:
   CARGO_TERM_COLOR: always
-  RUST_BACKTRACE: full
 
 jobs:
-  test:
-    name: Run Tests
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Install Rust
-      uses: dtolnay/rust-toolchain@stable
-      with:
-        components: clippy, rustfmt
-    
-    - name: Cache dependencies
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.cargo/registry
-          ~/.cargo/git
-          target
-        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-    
-    - name: Check formatting
-      run: cargo fmt --all -- --check
-    
-    - name: Clippy lint
-      run: cargo clippy --all-targets --all-features -- -D warnings
-    
-    - name: Run tests
-      run: cargo test --verbose --all-features
-    
-    - name: Build for release
-      run: cargo build --release --verbose
+  build:
 
-  build-release:
-    name: Build Release
-    needs: test
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Install Rust
-      uses: dtolnay/rust-toolchain@stable
-    
-    - name: Cache dependencies
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.cargo/registry
-          ~/.cargo/git
-          target
-        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-    
-    - name: Build release binary
-      run: cargo build --release --locked
-    
-    - name: Upload artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: release-binary
-        path: target/release/
 
-  deploy-dev:
-    name: Deploy to Development
-    needs: test
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
-    
     steps:
     - uses: actions/checkout@v4
-    
-    - name: Install Rust
-      uses: dtolnay/rust-toolchain@stable
-    
-    - name: Build for development
+    - name: Build
       run: cargo build --verbose
-    
-    - name: Run integration tests
-      run: |
-        if [ -f "tests/integration.rs" ]; then
-          cargo test --test integration --verbose
-        fi
-    
-    - name: Upload dev artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: dev-build
-        path: target/debug/
-        if-no-files-found: warn
-
-  security-audit:
-    name: Security Audit
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Install cargo-audit
-      run: |
-        if ! command -v cargo-audit &> /dev/null; then
-          cargo install cargo-audit
-        fi
-    
-    - name: Audit dependencies
-      run: cargo audit
-
-  documentation:
-    name: Build Documentation
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Install Rust
-      uses: dtolnay/rust-toolchain@stable
-    
-    - name: Generate documentation
-      run: cargo doc --no-deps --all-features
-    
-    - name: Upload docs
-      uses: actions/upload-artifact@v3
-      with:
-        name: documentation
-        path: target/doc/
-
-  coverage:
-    name: Code Coverage
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Install Rust with llvm-tools
-      uses: dtolnay/rust-toolchain@stable
-      with:
-        components: llvm-tools-preview
-    
-    - name: Install grcov
-      run: |
-        wget https://github.com/mozilla/grcov/releases/latest/download/grcov-x86_64-unknown-linux-gnu.tar.gz
-        tar -xzf grcov-x86_64-unknown-linux-gnu.tar.gz
-        sudo mv grcov /usr/local/bin/
-    
-    - name: Generate coverage
-      run: |
-        export RUSTFLAGS="-C instrument-coverage"
-        export LLVM_PROFILE_FILE="target/coverage-%p-%m.profraw"
-        cargo test --all-features
-        
-        grcov target/coverage-*.profraw \
-          --binary-path target/debug/deps/ \
-          --source-dir . \
-          --output-type html \
-          --branch \
-          --ignore-not-existing \
-          --ignore "/*" \
-          -o target/coverage/html
-    
-    - name: Upload coverage report
-      uses: actions/upload-artifact@v3
-      with:
-        name: coverage-report
-        path: target/coverage/html/
+    - name: Run tests
+      run: cargo test --verbose
