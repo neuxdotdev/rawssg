@@ -1,203 +1,632 @@
-RawSSG - Raw Static Site Generator
+
+RAWSSG - RAW STATIC SITE GENERATOR
 ===================================
 
-RawSSG is a minimalist static site generator built with Rust.
-Keep your content raw, simple, and fast.
+A minimalist static site generator built with Rust that keeps content raw and simple.
+No markdown, no complex formatting - just pure text with automatic link detection.
 
-INSTALLATION
-------------
-
-1. Install Rust:
-   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
-2. Clone and build:
-   git clone https://github.com/neuxdotdev/rawssg.git
-   cd rawssg
-   cargo build --release
-
-3. Install globally (optional):
-   cargo install --path .
-
-QUICK START
------------
-
-# Create a new site
-rawssg init my-site
-cd my-site
-
-# Build the site
-rawssg build
-
-# Start development server
-rawssg serve
-
-# Watch for changes
-rawssg build --watch
-
-BASIC USAGE
------------
-
-Initialize a new project:
-  rawssg init [path]
-
-Build your site:
-  rawssg build [--watch] [--minify] [--clean]
-
-Start development server:
-  rawssg serve [--port 8080] [--watch]
-
-Create new content:
-  rawssg new post "My Post Title"
-  rawssg new page "About" --draft
-
-Clean build output:
-  rawssg clean
-
-Validate configuration:
-  rawssg validate
-
-PROJECT STRUCTURE
+TABLE OF CONTENTS
 -----------------
 
-my-site/
-├── .rawfile          # Configuration file
-├── content/          # Your .rw and .md files
-│   ├── index.rw
-│   ├── about.rw
-│   └── posts/
-├── templates/        # Handlebars templates
-│   ├── base.html
-│   ├── _sidebar.html
-│   ├── _content.html
-│   └── _footer.html
-├── dist/             # Built site (auto-generated)
-└── build-info.json   # Build metadata
+1.  Installation
+    1.1  System Requirements
+    1.2  Installing Rust
+    1.3  Installing RawSSG
+    1.4  Building from Source
 
-.RW FILE FORMAT
+2.  Quick Start
+    2.1  Creating Your First Site
+    2.2  Basic Commands
+    2.3  Project Structure
+
+3.  Configuration
+    3.1  The .rawfile Format
+    3.2  Configuration Options
+    3.3  Validation and Errors
+
+4.  Content Format
+    4.1  .rw Files Explained
+    4.2  Frontmatter Syntax
+    4.3  Raw Content Format
+    4.4  Supported Extensions
+
+5.  Templates
+    5.1  Template System Overview
+    5.2  Built-in Helpers
+    5.3  Partials and Layouts
+    5.4  Custom Templates
+
+6.  Building and Deployment
+    6.1  Build Process
+    6.2  Development Server
+    6.3  Production Deployment
+    6.4  Performance Optimization
+
+7.  Troubleshooting
+    7.1  Common Errors
+    7.2  Debug Tips
+    7.3  Getting Help
+
+8.  FAQ
+    8.1  General Questions
+    8.2  Technical Questions
+    8.3  Usage Questions
+
+9.  Contributing
+10. License
+
+1. INSTALLATION
 ---------------
 
-Example with frontmatter:
----
-title: Home Page
-slug: index
-date: 2026-01-01
-draft: false
-tags: [home, welcome]
----
-Your raw content here.
-URLs auto-link: https://github.com/neuxdotdev
-Email: neuxdev1@gmail.com
+1.1 SYSTEM REQUIREMENTS
 
-Plain text example:
-Just write content.
-Links work: https://example.com
-Email: hello@example.com
+    Operating System: Linux, macOS, or Windows
+    Memory: Minimum 2GB RAM
+    Storage: Minimum 100MB free space
+    Dependencies: Rust toolchain (if building from source)
 
-CONFIGURATION (.rawfile)
-------------------------
+1.2 INSTALLING RUST
 
-{
-  "version": "0.1.0",
-  "title": "My Site",
-  "description": "Site description",
-  "favicon": "favicon.ico",
-  "base_url": "https://example.com",
-  "content": {
-    "format": "plain",
-    "extensions": ["rw", "md"],
-    "ignore": ["drafts/"],
-    "drafts": false
-  },
-  "build": {
-    "output_dir": "dist",
-    "clean_build": false,
-    "minify": { "html": false, "css": false, "js": false },
-    "generate": { "sitemap": true, "robots": true, "feed": true },
-    "strict": false
-  },
-  "template": {
-    "dir": "templates",
-    "default_layout": "base.html",
-    "partials": ["sidebar", "footer"]
-  },
-  "nav": [
-    { "title": "Home", "url": "/" },
-    { "title": "About", "url": "/about" }
-  ],
-  "footer": {
-    "text": "Built with RawSSG",
-    "links": [{ "title": "GitHub", "url": "https://github.com/neuxdotdev" }],
-    "copyright": "© 2026 Your Name"
-  }
-}
+    If you don't have Rust installed:
 
-FEATURES
---------
+    $ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    $ source "$HOME/.cargo/env"
+    $ rustc --version
 
-* Raw text content (.rw files)
-* Frontmatter support (YAML)
-* Handlebars templating
-* Auto-link detection (URLs, emails)
-* Dark/light theme switching
-* Mobile-responsive sidebar
-* Live reload with --watch
-* Sitemap, robots.txt, RSS feed
-* HTML/CSS/JS minification
-* Draft content support
-* Multiple content formats (.rw, .md)
+    Verify installation with:
 
-TEMPLATES
----------
+    $ rustc --version
 
-RawSSG uses Handlebars templates with these built-in helpers:
+1.3 INSTALLING RAWSSG
 
-{{eq a b}}      - Check if a equals b
-{{neq a b}}     - Check if a not equals b
-{{lowercase s}} - Convert to lowercase
-{{date d}}      - Format date (YYYY-MM-DD → Month Day, Year)
+    From crates.io (when published):
 
-Available partials by default:
-{{> sidebar }}  - Navigation sidebar
-{{> content }}  - Page content
-{{> footer }}   - Site footer
+    $ cargo install rawssg
 
-DEPLOYMENT
-----------
+    From local source:
 
-1. Build for production:
-   rawssg build --minify
+    $ git clone https://github.com/neuxdotdev/rawssg.git
+    $ cd rawssg
+    $ cargo install --path .
 
-2. Deploy to any static hosting:
-   Netlify:    netlify deploy --dir=dist
-   Vercel:     vercel --prod
-   GitHub Pages: deploy dist/ folder
-   Cloudflare Pages: connect repository
+1.4 BUILDING FROM SOURCE
 
-TROUBLESHOOTING
+    $ git clone https://github.com/neuxdotdev/rawssg.git
+    $ cd rawssg
+    $ cargo build --release
+
+    The binary will be at: ./target/release/rawssg
+
+2. QUICK START
+--------------
+
+2.1 CREATING YOUR FIRST SITE
+
+    $ rawssg init my-site
+    $ cd my-site
+    $ rawssg build
+    $ rawssg serve
+
+    Your site will be available at http://localhost:8080
+
+2.2 BASIC COMMANDS
+
+    Initialize a project:
+    $ rawssg init [path]
+
+    Build the site:
+    $ rawssg build
+
+    Build with minification:
+    $ rawssg build --minify
+
+    Watch for changes:
+    $ rawssg build --watch
+
+    Start development server:
+    $ rawssg serve
+
+    Create new content:
+    $ rawssg new post "My First Post"
+    $ rawssg new page "About" --draft
+
+    Clean build output:
+    $ rawssg clean
+
+    Validate configuration:
+    $ rawssg validate
+
+2.3 PROJECT STRUCTURE
+
+    After running `rawssg init`:
+
+    my-project/
+    │
+    ├── .rawfile                    # Main configuration
+    │
+    ├── content/                    # All content files
+    │   ├── index.rw               # Home page
+    │   ├── about.rw               # About page
+    │   └── posts/                 # Blog posts directory
+    │       └── hello-world.rw
+    │
+    ├── templates/                  # Template files
+    │   ├── base.html              # Main layout
+    │   ├── _sidebar.html          # Sidebar partial
+    │   ├── _content.html          # Content partial
+    │   ├── _footer.html           # Footer partial
+    │   └── static/
+    │       ├── css/
+    │       │   └── styles.css     # Default styles
+    │       └── js/
+    │           └── scripts.js     # Default JavaScript
+    │
+    └── dist/                       # Built site (generated)
+        ├── index.html
+        ├── about/
+        │   └── index.html
+        ├── posts/
+        │   └── hello-world/
+        │       └── index.html
+        ├── css/
+        │   └── styles.css
+        ├── js/
+        │   └── scripts.js
+        ├── sitemap.xml
+        ├── robots.txt
+        └── feed.xml
+
+3. CONFIGURATION
+----------------
+
+3.1 THE .RAWFILE FORMAT
+
+    RawSSG uses a JSON configuration file named `.rawfile` at the project root.
+
+    Minimal configuration:
+
+    {
+        "version": "0.1.0",
+        "title": "My Site",
+        "base_url": "https://example.com"
+    }
+
+    Full configuration:
+
+    {
+        "version": "0.1.0",
+        "title": "My Site",
+        "description": "A site built with RawSSG",
+        "favicon": "favicon.ico",
+        "base_url": "https://example.com",
+
+        "content": {
+            "format": "plain",
+            "extensions": ["rw", "md"],
+            "ignore": ["drafts/"],
+            "drafts": false
+        },
+
+        "build": {
+            "output_dir": "dist",
+            "clean_build": false,
+            "minify": {
+                "html": false,
+                "css": false,
+                "js": false
+            },
+            "generate": {
+                "sitemap": true,
+                "robots": true,
+                "feed": true
+            },
+            "strict": false
+        },
+
+        "template": {
+            "dir": "templates",
+            "default_layout": "base.html",
+            "partials": ["sidebar", "content", "footer"]
+        },
+
+        "nav": [
+            {
+                "title": "Home",
+                "url": "/"
+            },
+            {
+                "title": "About",
+                "url": "/about"
+            },
+            {
+                "title": "Blog",
+                "url": "/blog",
+                "items": [
+                    {
+                        "title": "Recent Posts",
+                        "url": "/blog/recent"
+                    }
+                ]
+            }
+        ],
+
+        "footer": {
+            "text": "Built with RawSSG",
+            "links": [
+                {
+                    "title": "GitHub",
+                    "url": "https://github.com/neuxdotdev"
+                }
+            ],
+            "copyright": "© 2026 Your Name"
+        },
+
+        "custom": {
+            "google_analytics": "UA-XXXXX-Y",
+            "author": "Your Name"
+        }
+    }
+
+3.2 CONFIGURATION OPTIONS
+
+    Required fields:
+        version: Must be "0.1.0"
+        title: Site title
+        base_url: Base URL for absolute links
+
+    Optional fields:
+        description: Site description for meta tags
+        favicon: Path to favicon file
+        content: Content processing settings
+        build: Build process settings
+        template: Template system settings
+        nav: Navigation menu items
+        footer: Footer configuration
+        custom: Custom key-value pairs for templates
+
+3.3 VALIDATION AND ERRORS
+
+    Validate your configuration:
+
+    $ rawssg validate
+
+    Common validation errors:
+        - Missing required fields
+        - Invalid version
+        - Invalid JSON syntax
+        - File not found errors
+
+    In strict mode (build.strict: true), additional validations:
+        - Navigation items must have valid URLs
+        - Required template files must exist
+        - Frontmatter validation
+
+4. CONTENT FORMAT
+-----------------
+
+4.1 .RW FILES EXPLAINED
+
+    .rw files contain raw text content. They can include:
+        - Optional YAML frontmatter (between --- delimiters)
+        - Raw text content (after frontmatter)
+        - Auto-detected links and emails
+
+4.2 FRONTMATTER SYNTAX
+
+    Frontmatter is optional YAML at the top of the file:
+
+    ---
+    title: Page Title
+    slug: custom-slug
+    date: 2026-01-01
+    draft: false
+    layout: custom-layout
+    template: custom-template
+    tags:
+        - tag1
+        - tag2
+    categories:
+        - category1
+    custom_field: custom_value
+    ---
+
+    All frontmatter fields are optional. If no slug is provided,
+    the filename is used. If no title is provided, the slug is used.
+
+4.3 RAW CONTENT FORMAT
+
+    After frontmatter (or at the start of the file if no frontmatter),
+    write your content as plain text:
+
+    This is raw text. It preserves whitespace and formatting.
+
+    URLs are auto-linked: https://github.com/neuxdotdev
+    Emails are auto-linked: neuxdev1@gmail.com
+
+    No special formatting is applied. What you write is what you get.
+
+4.4 SUPPORTED EXTENSIONS
+
+    By default, RawSSG processes:
+        - .rw files (recommended)
+        - .md files (markdown, if enabled)
+
+    Configure extensions in .rawfile:
+
+    "content": {
+        "extensions": ["rw", "txt", "md"]
+    }
+
+5. TEMPLATES
+------------
+
+5.1 TEMPLATE SYSTEM OVERVIEW
+
+    RawSSG uses Handlebars templating engine. Templates are stored in
+    the templates/ directory and compiled with your content.
+
+5.2 BUILT-IN HELPERS
+
+    Equality check:
+        {{eq a b}} → true if a equals b
+
+    Inequality check:
+        {{neq a b}} → true if a not equals b
+
+    Lowercase conversion:
+        {{lowercase "TEXT"}} → "text"
+
+    Date formatting:
+        {{date "2026-01-01"}} → "January 1, 2026"
+
+    Safe HTML output:
+        {{variable | safe}} → Output raw HTML
+
+5.3 PARTIALS AND LAYOUTS
+
+    Default partials (in templates/ directory):
+        _sidebar.html - Navigation sidebar
+        _content.html - Content area
+        _footer.html - Site footer
+
+    Using partials in templates:
+        {{> sidebar}}
+        {{> content}}
+        {{> footer}}
+
+    Layout inheritance:
+        Base template (base.html) includes partials
+        Each page uses a layout (default: base.html)
+
+5.4 CUSTOM TEMPLATES
+
+    Create custom templates in templates/ directory:
+
+    custom-page.html:
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>{{title}}</title>
+        </head>
+        <body>
+            <h1>{{title}}</h1>
+            <div class="content">
+                {{content}}
+            </div>
+        </body>
+        </html>
+
+    Specify template in frontmatter:
+        ---
+        title: Custom Page
+        template: custom-page.html
+        ---
+
+6. BUILDING AND DEPLOYMENT
+--------------------------
+
+6.1 BUILD PROCESS
+
+    Basic build:
+        $ rawssg build
+
+    Build with options:
+        $ rawssg build --minify --clean
+
+    The build process:
+        1. Reads configuration from .rawfile
+        2. Processes all content files in content/
+        3. Applies templates
+        4. Generates static files in dist/
+        5. Creates sitemap.xml, robots.txt, feed.xml (if enabled)
+        6. Copies static assets
+
+6.2 DEVELOPMENT SERVER
+
+    Start server:
+        $ rawssg serve
+
+    Server with watch mode:
+        $ rawssg serve --watch
+
+    Custom port:
+        $ rawssg serve --port 3000
+
+    The server uses Python's http.server by default.
+    If Python is not available, it tries PHP's built-in server.
+
+6.3 PRODUCTION DEPLOYMENT
+
+    Build for production:
+        $ rawssg build --minify
+
+    Deploy to various platforms:
+
+    Netlify:
+        $ netlify deploy --dir=dist
+
+    Vercel:
+        $ vercel --prod
+
+    GitHub Pages:
+        # Push dist/ directory to gh-pages branch
+        $ git subtree push --prefix dist origin gh-pages
+
+    Cloudflare Pages:
+        Connect repository and set build command:
+        rawssg build --minify
+
+    Any static hosting:
+        Upload contents of dist/ directory
+
+6.4 PERFORMANCE OPTIMIZATION
+
+    Enable minification:
+        "build": {
+            "minify": {
+                "html": true,
+                "css": true,
+                "js": true
+            }
+        }
+
+    Clean build (removes old files):
+        $ rawssg build --clean
+
+    Disable unused features:
+        "build": {
+            "generate": {
+                "sitemap": false,
+                "robots": false,
+                "feed": false
+            }
+        }
+
+7. TROUBLESHOOTING
+------------------
+
+7.1 COMMON ERRORS
+
+    "No content files found":
+        Create content/index.rw:
+            $ mkdir -p content
+            $ echo "Hello World" > content/index.rw
+
+    "Config not found":
+        Initialize project:
+            $ rawssg init .
+
+    "Template not found":
+        Build to generate default templates:
+            $ rawssg build
+
+    "Invalid configuration":
+        Validate configuration:
+            $ rawssg validate
+
+    "Server failed to start":
+        Install Python 3 or PHP, or use custom port:
+            $ rawssg serve --port 3000
+
+7.2 DEBUG TIPS
+
+    Enable verbose output:
+        $ rawssg build --verbose
+
+    Check file permissions:
+        $ ls -la content/
+        $ ls -la templates/
+
+    Verify file encoding:
+        $ file content/index.rw
+
+    Check Rust version:
+        $ rustc --version
+        $ cargo --version
+
+7.3 GETTING HELP
+
+    Check documentation:
+        https://github.com/neuxdotdev/rawssg
+
+    File an issue:
+        https://github.com/neuxdotdev/rawssg/issues
+
+    Email support:
+        neuxdev1@gmail.com
+
+8. FAQ
+------
+
+8.1 GENERAL QUESTIONS
+
+    Q: What does "raw" mean in RawSSG?
+    A: Content remains as plain text without markdown or complex formatting.
+       URLs and emails are auto-linked, but otherwise text is preserved as-is.
+
+    Q: Why use RawSSG instead of other static site generators?
+    A: RawSSG is minimal, fast, and focused on raw text content.
+       It has zero dependencies in production and builds extremely quickly.
+
+    Q: Is RawSSG suitable for blogs?
+    A: Yes, with frontmatter support for metadata, dates, tags, and RSS feed generation.
+
+    Q: Can I use RawSSG for documentation sites?
+    A: Yes, the raw text format works well for technical documentation.
+
+8.2 TECHNICAL QUESTIONS
+
+    Q: Can I use custom CSS and JavaScript?
+    A: Yes, place files in templates/static/css/ and templates/static/js/
+       They will be copied to dist/ during build.
+
+    Q: Can I add analytics tracking?
+    A: Yes, add your analytics code to templates/base.html or use custom field.
+
+    Q: How do I create nested pages?
+    A: Create directories in content/:
+        content/blog/post-1.rw → dist/blog/post-1/index.html
+
+    Q: Can I use custom domains?
+    A: Yes, set base_url in .rawfile and configure your domain with your hosting provider.
+
+    Q: Is there image support?
+    A: Place images in templates/static/images/ and reference them as /images/filename.jpg
+
+8.3 USAGE QUESTIONS
+
+    Q: How do I change the theme?
+    A: Edit templates/static/css/styles.css or replace with your own CSS.
+
+    Q: Can I disable the sidebar?
+    A: Yes, edit templates/base.html and remove {{> sidebar}}.
+
+    Q: How do I add social media links?
+    A: Add to navigation or footer in .rawfile configuration.
+
+    Q: Can I schedule posts for future dates?
+    A: Use the date field in frontmatter and build when ready to publish.
+
+    Q: How do I backup my site?
+    A: Backup content/, templates/, and .rawfile files.
+
+9. CONTRIBUTING
 ---------------
 
-Error: "No content files found"
-  Create content/index.rw: mkdir -p content && echo "Hello" > content/index.rw
+    Contributions are welcome!
 
-Error: "Config not found"
-  Run: rawssg init .
+    1. Fork the repository
+    2. Create a feature branch
+    3. Make your changes
+    4. Run tests (cargo test)
+    5. Submit a pull request
 
-Error: "Template not found"
-  Run: rawssg build (auto-creates default templates)
+    Code standards:
+        - Follow Rust conventions
+        - Add documentation for new features
+        - Include tests where applicable
 
-Server won't start:
-  Install Python 3 or PHP, or use: rawssg serve --port 3000
-
-CONTACT
--------
-
-GitHub: https://github.com/neuxdotdev
-Email:  neuxdev1@gmail.com
-Issues: https://github.com/neuxdotdev/rawssg/issues
-
-LICENSE
--------
-
-MIT License - see LICENSE file.
-
-Keep it raw. Keep it simple.
+    Report bugs:
+        - Use the issue tracker
+        - Include steps to reproduce
+        - Provide error messages
