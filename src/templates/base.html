@@ -1,73 +1,48 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-theme="light">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="light dark" />
-    <title>
-      {{#if title}}
-        {{title}} - 
-      {{/if}}
-      {{config.title}}
-    </title>
-
-    {{#if config.description}}
-      <meta name="description" content="{{config.description}}" />
-    {{/if}}
-
-    {{#if config.favicon}}
-      <link rel="icon" href="{{config.favicon}}" />
-    {{/if}}
-
-    <link rel="stylesheet" href="/css/styles.css" />
-    <link rel="stylesheet" href="/css/raw-features.css" />
-
-    <script src="/js/scripts.js" defer></script>
-    <script src="/js/raw-features.js" defer></script>
-
-    {{#if config.custom.head}}
-        {{safe config.custom.head}}
-    {{/if}}
-
-
-  </head>
-
-  <body>
-    <div class="container">
-      {{> sidebar }}
-      <main class="content">
-        {{> content }}
-      </main>
-    </div>
-    {{> footer }}
-
-    <script>
-      const theme =
-        localStorage.getItem("theme") ||
-        (window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light");
-      document.documentElement.setAttribute("data-theme", theme);
-      document.querySelectorAll(".raw-content").forEach((el) => {
-        const text = el.textContent;
-        el.innerHTML = text
-          .replace(
-            /(https?:\/\/[^\s]+)/g,
-            '<a href="$1" class="rw-link" target="_blank" rel="noopener">$1</a>'
-          )
-          .replace(
-            /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,})/g,
-            '<a href="mailto:$1" class="rw-link">$1</a>'
-          )
-          .replace(
-            /```([\s\S]*?)```/g,
-            '<pre class="raw-code-block"><code>$1</code><button class="copy-raw-code">📋</button></pre>'
-          )
-          .replace(
-            /`([^`]+)`/g,
-            '<code class="raw-inline-code">$1</code>'
-          );
-      });
-    </script>
-  </body>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="color-scheme" content="light dark" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+		/>
+		<title>{{#if title}} {{title}} - {{/if}} {{config.title}}</title>
+		{{#if config.description}}
+		<meta name="description" content="{{config.description}}" />
+		{{/if}} {{#if config.favicon}}
+		<link rel="icon" href="{{config.favicon}}" />
+		{{/if}}
+		<link rel="stylesheet" href="/css/styles.css" />
+		<script src="/js/scripts.js" defer></script>
+		{{#if config.custom.head}} {{safe config.custom.head}} {{/if}}
+	</head>
+	<body>
+		<div class="container">
+			{{> sidebar }}
+			<main class="content" id="main-content">{{> content }}</main>
+		</div>
+		{{> footer }}
+		<script>
+			document.querySelectorAll(".raw-content").forEach((el) => {
+				const text = el.innerHTML;
+				el.innerHTML = text
+					.replace(
+						/(https?:\/\/[^\s]+)/g,
+						'<a href="$1" class="rw-link" target="_blank" rel="noopener">$1</a>',
+					)
+					.replace(
+						/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,})/g,
+						'<a href="mailto:$1" class="rw-link">$1</a>',
+					);
+			});
+			(function () {
+				const theme =
+					localStorage.getItem("theme") ||
+					(window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+				document.documentElement.setAttribute("data-theme", theme);
+			})();
+		</script>
+	</body>
 </html>
