@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use std::path::Path;
 use crate::error::{RawSSGError, Result};
 use chrono::Datelike;
-const CONFIG_VERSION: &str = "0.0.1";
+const CONFIG_VERSION: &str = "0.0.2";
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "kebab-case")]
 pub struct RawConfig {

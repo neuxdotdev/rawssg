@@ -1,0 +1,336 @@
+# RawSSG - Raw Static Site Generator
+
+RawSSG is a minimalist static site generator built with Rust.
+Its main focus: **content remains raw**, without complicated markdown or HTML formatting.
+
+## Key Features
+
+-  **.rw Files** - Raw content with frontmatter
+-  **Template Handlebars** - Layouts and partials
+-  **Responsive design** - Mobile-ready with sidebar
+-  **Dark/light theme** - Auto-detection + manual toggle
+-  **Auto-link detection** - URLs and emails become links automatically
+-  **Fast build** - Rust-powered, parallel processing
+-  **Live reload** - Watch mode with hot rebuild
+-  **SEO ready** - Sitemap, robots.txt, RSS feed
+-  **Minification** - HTML, CSS, JS optimization
+
+## Installation
+
+### 1. Install Rust
+
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+### 2. Clone & Build
+
+```bash
+git clone https://github.com/neuxdotdev/rawssg.git
+cd rawssg
+cargo build --release
+```
+
+### 3. Install global (optional)
+
+```bash
+cargo install --path .
+```
+
+## How to Use
+
+### Initialize a new project
+
+```bash
+rawssg init my-site
+cd my-site
+```
+
+### Project Structure
+
+```
+my-site/
+ .rawfile # Main Configuration
+ content/ # .rw and .md Files
+  index.rw
+  about.rw
+ templates/ # Handlebars Template
+  base.html
+  _sidebar.html
+  _content.html
+  _footer.html
+ dist/ # Build output (auto-generated)
+```
+
+### Build the site
+
+```bash
+rawssg build # Build once
+rawssg build --watch # Auto-rebuild on changes
+rawssg build --minify # Build with minification
+```
+
+### Development server
+
+```bash
+rawssg serve # Server at http://localhost:8080
+rawssg serve --watch # Server + auto-reload
+```
+
+### Create new content
+
+```bash
+rawssg new post "Post Title"
+rawssg new page "About Me" --draft
+```
+
+### Clean output
+
+```bash
+rawssg clean
+```
+
+## File Format .rw
+
+### Example with frontmatter:
+
+```yaml
+---
+title: "Home Page"
+slug: index
+date: 2026-01-01
+draft: false
+tags: [home, welcome]
+---
+Content here. Text remains raw.
+
+Automatic link: https://github.com/neuxdotdev
+Email: neuxdev1@gmail.com
+
+No markdown needed, just plain text.
+```
+
+### Example without frontmatter:
+
+```
+Straight content without metadata.
+The file will use the title from the filename.
+
+https://example.com
+email@domain.com
+```
+
+## Configuration (.rawfile)
+
+```json
+{
+    "version": "0.1.0",
+    "title": "My Site",
+    "description": "Site description",
+    "favicon": "favicon.ico",
+    "base_url": "https://example.com",
+
+    "content": {
+        "format": "plain",
+        "extensions": ["rw", "md"],
+        "ignore": ["drafts/"],
+        "drafts": false
+    },
+
+    "build": {
+        "output_dir": "dist",
+        "clean_build": false,
+        "minify": {
+            "html": false,
+            "css": false,
+            "js": false
+        },
+        "generate": {
+            "sitemap": true,
+            "robots": true,
+            "feed": true
+        },
+        "strict": false
+    },
+
+    "templates": {
+        "dir": "templates",
+        "default_layout": "base.html",
+        "partials": ["sidebar", "footer"]
+    },
+
+    "nav": [
+        { "title": "Home", "url": "/" },
+        { "title": "About", "url": "/about" },
+        { "title": "Blog", "url": "/blog" }
+    ],
+
+    "footer": {
+        "text": "Built with RawSSG",
+        "links": [{ "title": "GitHub", "url": "https://github.com/neuxdotdev" }],
+        "copyright": " 2026 Your Name"
+    }
+}
+```
+
+## Template System
+
+RawSSG uses Handlebars with features:
+
+### Main layout (base.html)
+
+```handlebars
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>{{#if title}}{{title}} - {{/if}}{{config.title}}</title>
+</head>
+<body>
+{{>sidebar}}
+<main>{{> content }}</main>
+{{>footer}}
+</body>
+</html>
+```
+
+### Partial (example: \_sidebar.html)
+
+```handlebars
+<nav>
+    {{#each config.nav}}
+        <a href="{{url}}">{{title}}</a>
+    {{/each}}
+</nav>
+```
+
+### Helpers available
+
+- `{{eq a b}}` - Equality check
+- `{{neq a b}}` - Inequality check
+- `{{lowercase str}}` - Convert to lowercase
+- `{{date "2026-01-01"}}` - Date format ( "January 1, 2026")
+
+## CLI Commands
+
+```
+rawssg init [path] # Initialize a new project
+rawssg build [flags] # Build a site
+rawssg serve [flags] # Start the dev server
+rawssg new <type> <title> # Create new content
+rawssg clean # Clear build output
+rawssg validate # Validate configuration
+rawssg help # Show help
+rawssg version # Show version
+```
+
+### Build Flags:
+
+- `--clean` - Clean dist before build
+- `--watch` - Watch mode for auto-rebuild
+- `--minify` - Minify HTML/CSS/JS
+- `--drafts` - Include draft content
+- `--config` - Path to config file (default: .rawfile)
+
+### Flags serve:
+
+- `--port` - Server port (default: 8080)
+- `--watch` - Auto-rebuild on changes
+
+## Theme Customization
+
+### CSS Variables (templates/static/css/styles.css):
+
+```css
+:root {
+    --bg-light: #ffffff;
+    --text-light: #24292f;
+    --bg-dark: #0d1117;
+    --text-dark: #c9d1d9;
+    --primary: #58a6ff;
+    --secondary: #8b949e;
+}
+```
+
+### JavaScript hooks (templates/static/js/scripts.js):
+
+- Theme toggle
+- Mobile menu
+- Link auto-detection
+- Custom scripts
+
+## Deployments
+
+### Build for production:
+
+```bash
+rawssg build --minify
+```
+
+### Upload to static hosting:
+
+```bash
+# Example: Netlify
+netlify deploy --dir=dist
+
+# Example: GitHub Pages
+git add dist && git commit -m "Deploy"
+git subtree push --prefix dist origin gh-pages
+
+# Example: Vercel
+vercel --prod
+```
+
+## Troubleshooting
+
+### Error: "No content files found"
+
+```bash
+mkdir -p content
+echo "Hello World" > content/index.rw
+```
+
+### Error: "Config not found"
+
+```bash
+rawssg init .
+```
+
+### Error: "Template not found"
+
+```bash
+rm -rf templates
+rawssg build # Auto-generate default templates
+```
+
+### The server is not running
+
+```bash
+# Install Python 3 or PHP
+sudo apt install python3 # Ubuntu/Debian
+brew install python # macOS
+
+# Or use PHP
+rawssg serve --port 3000
+```
+
+## License
+
+MIT License - see LICENSE file.
+
+## Contribution
+
+1. Fork the repository
+2. Create a branch: `git checkout -b new-feature`
+3. Commit: `git commit -m 'Add feature'`
+4. Push: `git push origin new-feature`
+5. Create a Pull Request
+
+## Contact
+
+- GitHub: https://github.com/neuxdotdev
+- Email: neuxdev1@gmail.com
+- Issues: https://github.com/neuxdotdev/rawssg/issues
+
+---
+
+**Keep it raw, keep it simple.** 

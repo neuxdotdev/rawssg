@@ -1,0 +1,23 @@
+commit 7f055339543250aaff45868405ac1327aaffc5d8
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date: Tue Jan 27 11:40:49 2026 +0700
+
+    fixed worklwos
+
+commit 32e87b6e176c77d28ac33be2649323f9d23f87f8
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date: Tue Jan 27 11:37:20 2026 +0700
+
+    Create rust.yml
+
+commit e7c81e17924022ebb1b78b137a6fd784c49710ed
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date: Tue Jan 27 11:35:38 2026 +0700
+
+    release v0.0.1
+
+commit a1146986905e648a7dfe1c0efd60f34863726935
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date: Mon Jan 26 18:48:51 2026 +0700
+
+    Initial commit

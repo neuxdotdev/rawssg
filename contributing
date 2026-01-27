@@ -1,0 +1,62 @@
+# Contributing to This Project
+
+Thank you for your interest in contributing! Please read these guidelines to ensure your contribution is accepted quickly and clearly.
+
+## Code of Conduct
+
+- Be polite and professional.
+- Respect the opinions of others.
+- No spam, trolling, or offensive content.
+
+## How to Contribute
+
+1. Fork this repository.
+2. Clone your fork:
+
+$ git clone https://github.com/neuxdotdev/rawssg.git
+
+3. Create a new branch:
+
+$ git checkout -b feature/feature-name-or-fix/fixname
+
+4. Make changes and commit:
+
+$ git add .
+$ git commit -m "Short description of changes"
+
+5. Push the branch to your fork:
+
+$ git push origin branch-name
+
+6. Open a Pull Request from your fork to the main repository.
+
+## Code Standards
+
+- Use 2-space indentation.
+- Use clear and consistent variable naming.
+- Follow the project's programming style.
+- Include comments if the code is complex or not immediately obvious.
+
+## Git Workflow
+
+- Pull requests must come from the feature/fix branch.
+- Commits should be descriptive, clear, and concise.
+- Always sync your branch with main before creating a PR.
+
+## Testing
+
+- Ensure all unit tests pass before submitting a PR.
+- Add new tests when adding features.
+- Use the applicable testing framework for the project.
+
+## Reporting Bugs
+
+- Use [Issues](https://github.com/neuxdotdev/rawssg/issues) to report bugs.
+- Include reproduction steps, environment, and error logs if applicable.
+
+## Feature Requests
+
+- Use [Issues](https://github.com/neuxdotdev/rawssg/issues) to request new features.
+- Describe the feature's benefits and use cases.
+
+Thank you for your contribution! Every PR or issue will be reviewed, and feedback will be provided as quickly as possible.
