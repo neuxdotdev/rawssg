@@ -1,0 +1,9 @@
+[submodule "lib/librawssg"]
+	path = lib/librawssg
+	url = https://github.com/neuxdotdev/librawssg.git
+[submodule "lib/rawssg-templates"]
+	path = lib/rawssg-templates
+	url = https://github.com/neuxdotdev/rawssg-templates.git
+[submodule "lib/uirawssg"]
+	path = lib/uirawssg
+	url = https://github.com/neuxdotdev/uirawssg.git
