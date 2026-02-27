@@ -78,17 +78,17 @@ Libraries released in the rawssg ecosystem:
 rawssg lib
 The main rawssg core engine.
 Repository:
-[https://github.com/neuxdotdev/librawssg.git](https://github.com/neuxdotdev/librawssg.git)
+[https://github.com/neuxdotdev/librawssg.git]
 
 rawssg-templates
 The official collection of templates for rawssg.
 Repository:
-[https://github.com/neuxdotdev/rawssg-templates.git](https://github.com/neuxdotdev/rawssg-templates.git)
+[https://github.com/neuxdotdev/rawssg-templates.git]
 
 uirawssg
 UI and UX components for rawssg.
 Repository:
-[https://github.com/neuxdotdev/uirawssg.git](https://github.com/neuxdotdev/uirawssg.git)
+[https://github.com/neuxdotdev/uirawssg.git]
 
 Conclusion
 
@@ -97,10 +97,10 @@ rawssg is a constantly evolving project. Its focus is not on being the most wide
 Simplicity does not mean a lack of features. Simplicity is a design decision.
 Responsible for the core parsing, build, and orchestration processes.
 
-2. UI/UX Layer
+1. UI/UX Layer
 Manages user interactions and the tool experience.
 
-3. Template System
+1. Template System
 Manages the templating system to ensure flexibility and independent development.
 
 Libraries released in the rawssg ecosystem:
