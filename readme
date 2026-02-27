@@ -1,35 +1,234 @@
+RAWSSG
+Static site generator with its own .rw format – raw, minimal, no abstractions.
+
+rawssg is a static site generator written in Rust, focused on clarity, speed, and structural transparency.
+No Markdown. No HTML authoring. No abstraction layers. Just write .rw files and build.
+
+Simplicity here is deliberate.
+
+
+---
+
+QUICK START
+
+Install:
+
+cargo install rawssg
+
+Create a new site:
+
+rawssg init my-site cd my-site
+
+Write content:
+
+cd content echo "# Hello World" > index.rw
+
+Build:
+
+rawssg build
+
+Serve locally:
+
+rawssg serve
+
+Output is generated inside:
+
+my-site/public/
+
+
+---
+
+WHY RAWSSG?
+
+No Markdown, no HTML
+rawssg uses a custom .rw syntax designed for clarity and direct structure.
+No Markdown edge cases. No HTML clutter.
+
+Zero configuration
+You can write .rw files and build immediately. rawssg.toml is optional.
+
+Fast and transparent
+Built in Rust with a minimal dependency graph.
+No hidden processing layers.
+
+Modular architecture
+Each responsibility is separated into independent libraries.
+
+AGPL-3.0
+Full freedom to use, study, modify, and distribute.
+
+
+---
+
+INSTALLATION
+
+Using Cargo:
+
+cargo install rawssg
+
+Or download a pre-built binary from the official releases page and place it in your PATH.
+
+
+---
+
+PROJECT STRUCTURE
+
+After running:
+
+rawssg init my-site
+
+You get:
+
+my-site/ content/          your .rw files templates/        HTML templates rawssg.toml       optional configuration public/           generated static site
+
+There are no hidden directories.
+
+
+---
+
+WRITING CONTENT
+
+Example content/index.rw:
+
+title: Homepage date: 2025-02-28
+
+Welcome
+
+This is a paragraph in raw format.
+
+list item one
+
+list item two
+
+
+The .rw parser converts this into clean static HTML.
+
+
+---
+
+BUILD PROCESS
+
+Run:
+
+rawssg build
+
+The engine:
+
+1. Parses .rw files
+
+
+2. Resolves templates
+
+
+3. Generates static HTML
+
+
+4. Outputs everything into public/
+
+
+
+To preview locally:
+
+rawssg serve
+
+Default local server runs at:
+
+http://localhost:8080
+
+
+---
+
+FEATURES
+
+Custom .rw parser
+Lean and deterministic syntax.
+
+Template inheritance
+Templates stored in templates/.
+
+Live reload
+Development server reloads on file change.
+
+Incremental builds
+Only changed files are rebuilt.
+
+Syntax highlighting
+Optional support for code blocks.
+
+Static deployment
+Compatible with GitHub Pages, Netlify, Vercel, or any static hosting.
+
+
+---
+
+ARCHITECTURE
+
+rawssg is modular by design.
+
+uirawssg
+Handles CLI interaction, prompts, logging, and user workflow.
+
+librawssg
+Core engine. Parses .rw files, builds structure, orchestrates rendering.
+
+rawssg-templates
+Default templates and layout system.
+
+Each library is versioned independently and can evolve separately.
+
+
+---
+
+ECOSYSTEM
+
 rawssg
+Main CLI interface.
 
-About
-rawssg is a static site generator (SSG) built around simplicity in both user interface and user experience. Inspired by tools like rust-lang/mdbook, it emphasizes a clean workflow, speed, and efficiency without unnecessary complexity. The goal is to offer a "raw" and straightforward approach to creating static sites—no heavy configuration, no layers of abstraction, just a lightweight and accessible tool.
+librawssg
+Core parsing and build engine.
 
-Philosophy
-rawssg was not designed exclusively for developers seeking instant results. It emerged from a desire to build an SSG that anyone can understand and use with ease. Many existing SSGs, especially those relying on Markdown, have grown overly similar and complex. rawssg seeks to break away from that saturation by focusing on:
+rawssg-templates
+Official template collection.
 
-· Intuitive UI and UX
-· A natural content creation process
-· Transparent system structure
-· A shallow learning curve for all users
+uirawssg
+UI and CLI layer.
 
-rawssg is an experiment in deliberate simplicity.
+---
 
-Ecosystem
-Built entirely in Rust, rawssg follows a modular architecture where each responsibility is separated into its own library. This design ensures flexibility, maintainability, and scalability over time.
+CONTRIBUTING
 
-The ecosystem consists of three core layers:
+Issues and pull requests are welcome.
 
-1. Core Engine – Handles parsing, building, and orchestration.
-2. UI/UX Layer – Manages user interactions and the overall tool experience.
-3. Template System – Provides a flexible and independently maintainable templating mechanism.
+Before contributing, read CONTRIBUTING.md.
 
-Libraries
+Focus areas:
 
-· rawssg lib – The main engine.
-    Repository: https://github.com/neuxdotdev/librawssg.git
-· rawssg-templates – Official template collection.
-    Repository: https://github.com/neuxdotdev/rawssg-templates.git
-· uirawssg – UI and UX components.
-    Repository: https://github.com/neuxdotdev/uirawssg.git
+Parser refinement
+Performance optimization
+Template improvements
+Documentation clarity
 
-Conclusion
-rawssg is an evolving project that prioritizes clarity of purpose over widespread adoption. Simplicity is not a lack of features—it is a conscious design choice.
+
+---
+
+LICENSE
+
+AGPL-3.0
+Copyright 2025 neuxdotdev
+
+This program is free software. You can redistribute and modify it under the terms of the GNU Affero General Public License version 3 or any later version.
+
+
+---
+
+WHY “RAW”?
+
+rawssg rejects the complexity creep of traditional static site generators.
+
+Instead of layering plugins, themes, and configuration systems, it introduces a clean .rw syntax and a transparent architecture.
+
+Content first.
+Structure visible.
+No abstraction theater.
+
+rawssg is an experiment in radical simplicity.
