@@ -1,127 +1,35 @@
 rawssg
 
 About
-
-rawssg is a static site generator (SSG) designed with a focus on UI and UX simplicity. The project draws heavily from other SSG approaches, such as rust-lang/mdbook, which are known for their simplicity, speed, and efficiency.
-
-rawssg doesn't attempt to be a complex framework or full of layers of configuration. Its primary focus is a clean user experience, a clear workflow, and a lightweight, fast-accessible end result.
-
-rawssg's primary goal is to provide a static site creation experience that feels "raw," minimal, and straightforward, without unnecessary distractions.
+rawssg is a static site generator (SSG) built around simplicity in both user interface and user experience. Inspired by tools like rust-lang/mdbook, it emphasizes a clean workflow, speed, and efficiency without unnecessary complexity. The goal is to offer a "raw" and straightforward approach to creating static sites—no heavy configuration, no layers of abstraction, just a lightweight and accessible tool.
 
 Philosophy
+rawssg was not designed exclusively for developers seeking instant results. It emerged from a desire to build an SSG that anyone can understand and use with ease. Many existing SSGs, especially those relying on Markdown, have grown overly similar and complex. rawssg seeks to break away from that saturation by focusing on:
 
-rawssg wasn't created specifically for developers who want everything instant or "satset." Instead, the project was born from the desire to create an SSG that is truly easy to understand and use for anyone.
-
-Many current SSGs rely too heavily on the same patterns, particularly Markdown-based ones, with nearly identical approaches. rawssg was born out of this saturation.
-
-The vision is simple:
-
-* The UI and UX should be intuitive.
-* The content creation process should feel natural.
-* The system structure should be transparent.
-* Anyone should be able to use it without a painful learning curve.
+· Intuitive UI and UX
+· A natural content creation process
+· Transparent system structure
+· A shallow learning curve for all users
 
 rawssg is an experiment in deliberate simplicity.
 
 Ecosystem
+Built entirely in Rust, rawssg follows a modular architecture where each responsibility is separated into its own library. This design ensures flexibility, maintainability, and scalability over time.
 
-rawssg is built entirely in Rust. Its architecture is modular and separated by responsibility.
+The ecosystem consists of three core layers:
 
-Each part of the system is released as a separate library to maintain flexibility, maintainability, and long-term scalability.
+1. Core Engine – Handles parsing, building, and orchestration.
+2. UI/UX Layer – Manages user interactions and the overall tool experience.
+3. Template System – Provides a flexible and independently maintainable templating mechanism.
 
-Ecosystem structure:
+Libraries
 
-1. Core EngineRAWSSG
-
-About
-
-rawssg is a static site generator (SSG) designed with a focus on UI and UX simplicity. The project draws heavily from other SSG approaches, such as rust-lang/mdbook, which are known for their simplicity, speed, and efficiency.
-
-rawssg doesn't attempt to be a complex framework or full of layers of configuration. Its primary focus is a clean user experience, a clear workflow, and a lightweight, fast-accessible end result.
-
-rawssg's primary goal is to provide a static site creation experience that feels "raw," minimal, and straightforward, without unnecessary distractions.
-
-Philosophy
-
-rawssg wasn't created specifically for developers who want everything instant or "satset." Instead, the project was born from the desire to create an SSG that is truly easy to understand and use for anyone.
-
-Many current SSGs rely too heavily on the same patterns, particularly Markdown-based ones, with nearly identical approaches. rawssg was born out of this saturation.
-
-The vision is simple:
-
-* The UI and UX should be intuitive.
-* The content creation process should feel natural.
-* The system structure should be transparent.
-* Anyone should be able to use it without a painful learning curve.
-
-rawssg is an experiment in deliberate simplicity.
-
-Ecosystem
-
-rawssg is built entirely in Rust. Its architecture is modular and separated by responsibility.
-
-Each part of the system is released as a separate library to maintain flexibility, maintainability, and long-term scalability.
-
-Ecosystem structure:
-
-1. Core Engine
-Responsible for the core parsing, build, and orchestration processes.
-
-2. UI/UX Layer
-Manages user interactions and the tool experience.
-
-3. Template System
-Manages the templating system to ensure flexibility and independent development.
-
-Libraries released in the rawssg ecosystem:
-
-rawssg lib
-The main rawssg core engine.
-Repository:
-[https://github.com/neuxdotdev/librawssg.git]
-
-rawssg-templates
-The official collection of templates for rawssg.
-Repository:
-[https://github.com/neuxdotdev/rawssg-templates.git]
-
-uirawssg
-UI and UX components for rawssg.
-Repository:
-[https://github.com/neuxdotdev/uirawssg.git]
+· rawssg lib – The main engine.
+    Repository: https://github.com/neuxdotdev/librawssg.git
+· rawssg-templates – Official template collection.
+    Repository: https://github.com/neuxdotdev/rawssg-templates.git
+· uirawssg – UI and UX components.
+    Repository: https://github.com/neuxdotdev/uirawssg.git
 
 Conclusion
-
-rawssg is a constantly evolving project. Its focus is not on being the most widely used, but on being the one with the clearest direction and purpose.
-
-Simplicity does not mean a lack of features. Simplicity is a design decision.
-Responsible for the core parsing, build, and orchestration processes.
-
-1. UI/UX Layer
-Manages user interactions and the tool experience.
-
-1. Template System
-Manages the templating system to ensure flexibility and independent development.
-
-Libraries released in the rawssg ecosystem:
-
-rawssg lib
-The main rawssg core engine.
-Repository:
-[https://github.com/neuxdotdev/librawssg.git]
-
-rawssg-templates
-The official collection of templates for rawssg.
-Repository:
-[https://github.com/neuxdotdev/rawssg-templates.git]
-
-uirawssg
-UI and UX components for rawssg.
-Repository:
-[https://github.com/neuxdotdev/uirawssg.git]
-
-Conclusion
-
-rawssg is a constantly evolving project. Its focus is not on being the most widely used, but on being the one with the clearest direction and purpose.
-
-Simplicity does not mean a lack of features. Simplicity is a design decision.
+rawssg is an evolving project that prioritizes clarity of purpose over widespread adoption. Simplicity is not a lack of features—it is a conscious design choice.
